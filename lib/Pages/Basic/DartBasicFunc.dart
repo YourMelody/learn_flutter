@@ -5,8 +5,7 @@ enum FuncType {
 	FuncTypeMapAndList,     // 基本数据类型介绍
 	FuncTypeException,      // 异常处理
 	FuncTypeFunction,       // 函数相关
-	FuncTypeAsync,          // 异步
-	FuncTypeOther           // 其它
+	FuncTypeAsync           // 异步
 }
 
 void dartBasicFunc(FuncType type) {
@@ -25,9 +24,6 @@ void dartBasicFunc(FuncType type) {
 			break;
 		case FuncType.FuncTypeAsync:
 			_aboutAsync();
-			break;
-		case FuncType.FuncTypeOther:
-			_other();
 			break;
 	}
 }
@@ -301,10 +297,13 @@ void _aboutAsync() {
 	// 此时应用不能绘制图形，不能处理任何点击，不能处理文件IO等
 
 	// Future 和 Event Queue
-	_eventQueue();
+//	_eventQueue();
 
 	// scheduleMicrotask 和 Microtask Queue
-	_microTaskQueue();
+//	_microTaskQueue();
+
+	// async 和 await
+	_asyncAndAwait();
 }
 
 // 1、通过Future，可以将任务添加到Event Queue的队尾
@@ -363,12 +362,34 @@ void _microTaskQueue() {
 }
 
 void _asyncAndAwait() async {
+	var a = await _futureTest0();
+	// a = null, runtimeType = Null
+	print('a = $a, runtimeType = ${a.runtimeType}');
 
+	var b = await _futureTest1();
+	// b = test1, runtimeType = String
+	print('b = $b, runtimeType = ${b.runtimeType}');
+
+	var c = await _futureTest2();
+	// c = null, runtimeType = Null
+	print('c = $c, runtimeType = ${c.runtimeType}');
 }
 
+Future _futureTest0() {
+	return Future(() => print('futureTest0'));
+}
 
+Future _futureTest1() {
+	return Future(() {
+		print('futureTest1');
+		return 'test1';
+	});
+}
 
-/* ******************************* 其它 ******************************* */
-void _other() {
-
+Future _futureTest2() {
+	return Future(() {
+		return 'abc';
+	}).then((value) {
+		print('value = $value');
+	});
 }

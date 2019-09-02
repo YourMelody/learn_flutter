@@ -14,7 +14,13 @@ class ZFBasicList extends StatelessWidget {
 	Widget build(BuildContext context) {
 		List<Map> dataSource = _getDataSource();
 		return ListView.builder(
-			itemBuilder: (context, index) => _DartBasicListItem(dataSource[index], index, this.basic),
+			itemBuilder: (context, index) {
+				if (this.basic == ShowBasic.ShowBasicOfDart) {
+					return _DartBasicListItem(dataSource[index], index);
+				} else {
+					return _WidgetBasicListItem(dataSource[index], index);
+				}
+			},
 			itemCount: dataSource.length
 		);
 	}
@@ -36,33 +42,29 @@ class ZFBasicList extends StatelessWidget {
 			}, {
 				'title': '5、异步处理',
 				'subTitle': 'Future/then/async/await等的使用'
-			}, {
-				'title': '6、其它',
-				'subTitle': ''
 			}];
 		} else {
 			return [{
-
+				'title': '1、StatelessWidget和StatefulWidget示例'
 			}, {
-				
+				'title': '2、Container'
 			}, {
-				
+				'title': ''
 			}, {
-				
+				'title': ''
 			}, {
-				
+				'title': ''
 			}, {
-				
+				'title': ''
 			}];
 		}
 	}
 }
 
 class _DartBasicListItem extends StatelessWidget {
-	_DartBasicListItem(this.mapData, this.currentIndex, this.basic);
+	_DartBasicListItem(this.mapData, this.currentIndex);
 	final Map mapData;
 	final int currentIndex;
-	final ShowBasic basic;
 	@override
 	Widget build(BuildContext context) {
 		return Card(
@@ -70,11 +72,7 @@ class _DartBasicListItem extends StatelessWidget {
 				title: Text(this.mapData['title'], style: TextStyle(fontSize: 20)),
 				trailing: Icon(Icons.arrow_forward_ios, color: Color(0xff5aa5ff)),
 				subtitle: Text(this.mapData['subTitle']),
-				onTap: () {
-					if (this.basic == ShowBasic.ShowBasicOfDart) {
-						_dartListItemTap();
-					}
-				},
+				onTap: () => _dartListItemTap()
 			),
 		);
 	}
@@ -96,18 +94,40 @@ class _DartBasicListItem extends StatelessWidget {
 			case 4: // 异步
 				dartBasicFunc(FuncType.FuncTypeAsync);
 				break;
-			case 5: // 其它
-				dartBasicFunc(FuncType.FuncTypeOther);
-				break;
 		}
 	}
 }
 
 class _WidgetBasicListItem extends StatelessWidget {
+	_WidgetBasicListItem(this.mapData, this.currentIndex);
+	final Map mapData;
+	final int currentIndex;
+
 	@override
 	Widget build(BuildContext context) {
-		return Container(
-			child: Text(''),
+		return Card(
+			child: ListTile(
+				leading: Icon(Icons.blur_on, color: Color(0xff5aa5ff)),
+				title: Text(this.mapData['title']),
+				trailing: Icon(Icons.arrow_forward_ios, color: Color(0xff5aa5ff)),
+				onTap: () => _widgetListItemTap(context),
+			),
 		);
+	}
+
+	_widgetListItemTap(BuildContext context) {
+		switch (this.currentIndex) {
+			case 0: // 有状态和无状态的widget
+				// 已经配置过的静态路由，可以通过这种方式跳转
+				Navigator.of(context).pushNamed('zf_state_widget');
+				break;
+			case 1:
+				Navigator.of(context).pushNamed('zf_container_widget');
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+		}
 	}
 }

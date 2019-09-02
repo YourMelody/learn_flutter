@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'Common/ZFBottomNavigationBar.dart';
+import 'Pages/Basic/StatelessAndStateful.dart';
+import 'Pages/Basic/ContainerIntro.dart';
 
 /* *
  * 动画调试：最简单方法是减慢动画速度。可以将scheduler库中的timeDilation变量设置为大于1.0的数字
@@ -47,11 +49,15 @@ void main() {
 		home: ZFBottomNavigationBar(),
 
 		// 设置主题
-		theme: ThemeData(primaryColor: Color(0xFF5AA5FF)),
+		theme: ThemeData(
+			// App主要部分的背景颜色（如ToolBar、TabBar等），如果不设置，默认为Colors.lightBlue[80O]
+			primaryColor: Color(0xFF5AA5FF)
+		),
 
 		// 静态路由配置，可以在路由注册的时候传递参数，也可以在手动调用pop的时候返回参数
-//		routes: <String, WidgetBuilder> {
-//
-//		},
+		routes: <String, WidgetBuilder> {
+			'zf_state_widget': (_) => StatelessAndStateful(),
+			'zf_container_widget': (_) => ContainerIntro()
+		},
 	));
 }

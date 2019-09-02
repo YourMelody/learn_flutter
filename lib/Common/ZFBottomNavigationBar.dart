@@ -26,12 +26,7 @@ class _ZFBottomNavWidgetState extends State<ZFBottomNavigationBar> with SingleTi
 		final TabBarView _myTabBarView = TabBarView(
 			children: <Widget> [
 				ZFBasicList(basic: ShowBasic.ShowBasicOfDart),
-				Container(
-					child: Center(
-						child: Text('Widget_tabBarView'),
-					),
-					color: Colors.black45,
-				)
+				ZFBasicList(basic: ShowBasic.ShowBasicOfWidget)
 			],
 			controller: _tabController,
 		);
@@ -69,6 +64,15 @@ class _ZFBottomNavWidgetState extends State<ZFBottomNavigationBar> with SingleTi
 					    }
 				    )
 			    ] : null,
+
+			    // 顶部导航栏左侧按钮
+			    leading: _currentIndex == 1 ? IconButton(
+				    icon: Icon(Icons.queue_music),
+				    iconSize: 24,
+				    onPressed: () {
+
+				    }
+			    ) : null,
 
 			    // 顶部导航栏下面副导航栏
 			    bottom: _currentIndex == 0 ? _getMaterialAppBarBottom() : null,
